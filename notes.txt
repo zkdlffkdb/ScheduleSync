@@ -1,7 +1,0 @@
-To run the webapp:
-1. Enter into the frontend folder (cd .../frontend)
-2. npm run start in terminal
-
-If node_modules folder not in frontend folder:
-In frontend folder,
-1. npm install in terminal
