@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import './MyAccount.css'
 
-export const MyAccount = ({ onLogout }) => {
+export const MyAccount = ({ onLogout, userName }) => {
   const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -14,7 +14,8 @@ export const MyAccount = ({ onLogout }) => {
       <div className="container">
         <div className="heading">
           <div className="text">My Account</div>
-          <p>Hello</p> {/*Insert name of user*/}
+          {/*Display name of user*/}
+          <p>Hello, {userName}</p> 
         </div>
 
         {/* Logout Button */}
