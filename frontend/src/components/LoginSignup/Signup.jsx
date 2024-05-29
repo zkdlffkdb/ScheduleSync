@@ -12,20 +12,20 @@ const Signup = () => {
     let [name, setName] = useState("");
     let [email, setEmail] = useState("");
     let [password, setPassword] = useState("");
-    //const values = { name, email, password };
-    //const [errors, setErrors] = useState({});
+    const values = { name, email, password };
+    const [errors, setErrors] = useState({});
     const navigate = useNavigate();
 
     function signup(event) {
         event.preventDefault();
-        // const validationErrors = validation(values);
-        // setErrors(validationErrors);
-        //if (Object.keys(validationErrors).length === 0) {
+        const validationErrors = validation(values);
+        setErrors(validationErrors);
+        if (!validationErrors.name && !validationErrors.email && !validationErrors.password) {
             axios.post("http://localhost:8081/sign-up", {name, email, password})
             .then(res => {
                 navigate("/");
             }).catch(err => console.log(err));
-        //}
+        }
     }
 
     return (
@@ -41,14 +41,14 @@ const Signup = () => {
                         <img src={user_icon} alt="user_icon" />
                         <input placeholder="Name" onChange={e => setName(e.target.value)}/>
                     </div>
-                    {/*<span className="error">{errors.name && <span>{errors.name}</span>}</span>*/}
+                    <span className="error">{errors.name && <span>{errors.name}</span>}</span>
 
                     {/*Email input*/}
                     <div className="input">
                         <img src={email_icon} alt="email_icon" />
                         <input type="email" placeholder="email@domain.com" onChange={e => setEmail(e.target.value)}/>                     
                     </div>
-                    {/*<span className="error">{errors.email && <span>{errors.email}</span>}</span>*/}
+                    <span className="error">{errors.email && <span>{errors.email}</span>}</span>
 
                     {/*Password input*/}
                     <div className="input">
@@ -56,9 +56,9 @@ const Signup = () => {
                         <input type="password" placeholder="Enter your password" minLength="8" 
                         onChange={e => setPassword(e.target.value)}/>
                     </div>
-                    {/*<span className="error">{errors.password && <span>{errors.password}</span>}</span>*/}
+                    <span className="error">{errors.password && <span>{errors.password}</span>}</span>
                 </div>
-                {/*can possibly have a forgot password button here*/}
+                {/*can possibly have a forgot password button here in the future*/}
                 <div className="submit-container">
                     <button type="submit">Sign up</button>
                 </div>
