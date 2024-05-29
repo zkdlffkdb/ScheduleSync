@@ -16,12 +16,14 @@ const Login = ({onLogin}) => {
         event.preventDefault();
         axios.post("http://localhost:8081/login", {email, password})
             .then(res => {
-                if (res.data === "Success") {
-                    // on success call onLogin() and navigate to my schedule
-                    onLogin();
-                    navigate("/my-schedule");
+                if (res.data === "Error") {
+                    alert("Error");                
+                } else if (res.data === "Failed") {
+                    alert("Wrong username or password");
                 } else {
-                    alert("Wrong password")
+                    // on success call onLogin() and navigate to my schedule
+                    onLogin(res.data);
+                    navigate("/my-schedule");
                 }                
             }).catch(err => console.log(err));
         }
