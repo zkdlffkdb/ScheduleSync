@@ -19,7 +19,7 @@ app.post("/sign-up", (req, res) => {
     const sql = "INSERT INTO login (`name`, `email`, `password`) VALUES (?)";
     const values = [
         req.body.name,
-        req.body.email,s
+        req.body.email,
         req.body.password
     ];
     db.query(sql, [values], (err, result) => {
@@ -32,13 +32,13 @@ app.post("/sign-up", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-    // make password case sensitive later
+    // make password case sensitive later??
     const sql = "SELECT * FROM login WHERE `email` = ? AND `password` = ?";
     db.query(sql, [req.body.email, req.body.password], (err, result) => {
         if (err) {
-            return res.json({Error: "Error"});
+            return res.json("Error");
         } else if (result.length > 0) {
-            return res.json("Success");
+            return res.json(result[0].name);
         } else {
             return res.json("Failed");
         }
