@@ -13,3 +13,4 @@ ScheduleSync is a WebApp which aims to streamline the scheduling process and hel
 2. [React](https://react.dev/)
 ### Backend
 1. [MySQL](https://www.mysql.com/)
+2. [Node.js](https://nodejs.org/en)
