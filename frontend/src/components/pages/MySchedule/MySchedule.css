@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.add-event {
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    color: white;
+}
+
+.calendar {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    margin: 20px auto;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 59px;
+    color: #ffffff;
+    background: #000000;
+    border-radius: 50px;
+    font-size: 19px;
+    font-weight: 700;
+    cursor: pointer;
+}

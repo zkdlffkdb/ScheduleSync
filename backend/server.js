@@ -11,9 +11,40 @@ app.use(cors());
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "", // fill in with your password
+    password: "Pandabearkai12", // fill in with your password
     database: "signup"
 })
+
+// Endpoint to create an event
+app.post("/create-event", (req, res) => {
+    const sql = "INSERT INTO events (`title`, `start`, `end`) VALUES (?)";
+    const values = [
+        req.body.title,
+        req.body.start,
+        req.body.end
+    ];
+    db.query(sql, [values], (err, result) => {
+        if (err) {
+            console.error('Error creating event:', err);
+            return res.status(500).json("Error creating event");
+        } else {
+            return res.json(result);
+        }
+    });
+});
+
+// Endpoint to fetch events
+app.get("/events", (req, res) => {
+    const sql = "SELECT * FROM events";
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.error('Error fetching events:', err);
+            return res.status(500).json("Error fetching events");
+        } else {
+            return res.json(result);
+        }
+    });
+});
 
 app.post("/sign-up", (req, res) => {
     const sql = "INSERT INTO login (`name`, `email`, `password`) VALUES (?)";
