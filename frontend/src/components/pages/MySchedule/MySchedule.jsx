@@ -3,20 +3,23 @@ import axios from 'axios';
 import { CalendarComponent } from './CalendarComponent'
 import './MySchedule.css'
 
-export const MySchedule = () => {
+export const MySchedule = ({ userName }) => {
   const [events, setEvents] = useState([]);
   
   const [newEvent, setNewEvent] = useState({
     title: '',
     start: '',
     end: '',
+    username: userName
   });
 
   useEffect(() => {
-    axios.get("http://localhost:8081/events")
+    axios.get("http://localhost:8081/events", {
+        params: { username: userName }
+      })
       .then((response) => setEvents(response.data))
       .catch((error) => console.log("Error fetching events", error));
-  }, []);
+  }, [userName]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -52,7 +55,7 @@ export const MySchedule = () => {
     axios.post("http://localhost:8081/create-event", eventToAdd)
       .then((response) => setEvents([...events, eventToAdd]))
       .catch((error) => console.log("Error creating event", error));
-    setNewEvent({ title: '', start: '', end: '' });
+    setNewEvent({ title: '', start: '', end: '', username: userName});
   };
 
   return (
