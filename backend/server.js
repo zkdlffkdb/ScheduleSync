@@ -23,10 +23,14 @@ app.post("/sign-up", (req, res) => {
         req.body.password
     ];
     db.query(sql, [values], (err, result) => {
+        // probably can include an extra error if there is duplicate username
         if (err) {
+            if (err.code == 'ER_DUP_ENTRY') {
+                return res.json({Error: "Duplicate User"});
+            }
             console.log(err);
         } else {
-            return res.json(result);
+            return res.json({Status: "Success"});
         }
     });
 });

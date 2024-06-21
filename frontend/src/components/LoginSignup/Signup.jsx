@@ -23,7 +23,12 @@ const Signup = () => {
         if (!validationErrors.name && !validationErrors.email && !validationErrors.password) {
             axios.post("http://localhost:8081/sign-up", {name, email, password})
             .then(res => {
-                navigate("/");
+                if (res.data.Status === "Success") {
+                    navigate("/");
+                } else {
+                    // can also be changed to be represented differently later on
+                    alert("This username has already been taken :( Please choose another username");
+                }
             }).catch(err => console.log(err));
         }
     }
