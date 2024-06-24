@@ -16,9 +16,9 @@ const db = mysql.createConnection({
 })
 
 app.post("/sign-up", (req, res) => {
-    const sql = "INSERT INTO login (`name`, `email`, `password`) VALUES (?)";
+    const sql = "INSERT INTO login (`username`, `email`, `password`) VALUES (?)";
     const values = [
-        req.body.name,
+        req.body.username,
         req.body.email,
         req.body.password
     ];
@@ -37,12 +37,12 @@ app.post("/sign-up", (req, res) => {
 
 app.post("/login", (req, res) => {
     // make password case sensitive later??
-    const sql = "SELECT * FROM login WHERE `email` = ? AND `password` = ?";
-    db.query(sql, [req.body.email, req.body.password], (err, result) => {
+    const sql = "SELECT * FROM login WHERE `username` = ? AND `password` = ?";
+    db.query(sql, [req.body.username, req.body.password], (err, result) => {
         if (err) {
             return res.json("Error");
         } else if (result.length > 0) {
-            return res.json(result[0].name);
+            return res.json(result[0].username);
         } else {
             return res.json("Failed");
         }
@@ -52,7 +52,7 @@ app.post("/login", (req, res) => {
 // Endpoint to create an event
 app.post("/create-event", (req, res) => {
     // include one more col to tie events to certain loginId
-    const getLoginId = "SELECT loginid FROM login WHERE name = ?";
+    const getLoginId = "SELECT loginid FROM login WHERE username = ?";
     db.query(getLoginId, [req.body.username], (err, result) => {
         if (err) {
             console.error('Unable to find user', err); // should not happen
@@ -81,7 +81,7 @@ app.post("/create-event", (req, res) => {
 // Endpoint to fetch events
 app.get("/events", (req, res) => {
     // amend to change it to only relevant events, not all
-    const getLoginId = "SELECT loginid FROM login WHERE name = ?";
+    const getLoginId = "SELECT loginid FROM login WHERE username = ?";
     db.query(getLoginId, [req.query.username], (err, result) => {
         if (err) {
             console.error('Unable to find user', err); // should not happen

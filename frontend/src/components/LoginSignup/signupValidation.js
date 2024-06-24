@@ -1,9 +1,9 @@
 function validation(values) {
     let error = {};
-    if (values.name === "") {
-        error.name = "Name should not be empty";
+    if (values.username === "") {
+        error.username = "Username should not be empty";
     } else {
-        error.name = "";
+        error.username = "";
     }
 
     if (values.email === "") {

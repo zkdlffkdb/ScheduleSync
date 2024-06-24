@@ -9,10 +9,10 @@ import email_icon from '../Assets/email_icon.png';
 import password_icon from '../Assets/password_icon.png';
 
 const Signup = () => {
-    let [name, setName] = useState("");
+    let [username, setUsername] = useState("");
     let [email, setEmail] = useState("");
     let [password, setPassword] = useState("");
-    const values = { name, email, password };
+    const values = { username, email, password };
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
 
@@ -20,8 +20,8 @@ const Signup = () => {
         event.preventDefault();
         const validationErrors = validation(values);
         setErrors(validationErrors);
-        if (!validationErrors.name && !validationErrors.email && !validationErrors.password) {
-            axios.post("http://localhost:8081/sign-up", {name, email, password})
+        if (!validationErrors.username && !validationErrors.email && !validationErrors.password) {
+            axios.post("http://localhost:8081/sign-up", {username, email, password})
             .then(res => {
                 if (res.data.Status === "Success") {
                     navigate("/");
@@ -44,9 +44,9 @@ const Signup = () => {
                     {/*Name input*/}
                     <div className="input">
                         <img src={user_icon} alt="user_icon" />
-                        <input placeholder="Name" onChange={e => setName(e.target.value)}/>
+                        <input placeholder="Username" onChange={e => setUsername(e.target.value)}/>
                     </div>
-                    <span className="error">{errors.name && <span>{errors.name}</span>}</span>
+                    <span className="error">{errors.username && <span>{errors.username}</span>}</span>
 
                     {/*Email input*/}
                     <div className="input">
