@@ -3,18 +3,18 @@ import {Link, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import "./loginSignup.css";
 
-import email_icon from '../Assets/email_icon.png';
+import user_icon from '../Assets/user_icon.png';
 import password_icon from '../Assets/password_icon.png';
 
 const Login = ({onLogin}) => {
-    let [email, setEmail] = useState("");
+    let [username, setUsername] = useState("");
     let [password, setPassword] = useState("");
     
     const navigate = useNavigate();
 
     function login(event) {
         event.preventDefault();
-        axios.post("http://localhost:8081/login", {email, password})
+        axios.post("http://localhost:8081/login", {username, password})
             .then(res => {
                 if (res.data === "Error") {
                     alert("Error");                
@@ -38,8 +38,8 @@ const Login = ({onLogin}) => {
                 <div className="inputs">
                     {/*Email input*/}
                     <div className="input">
-                        <img src={email_icon} alt="email_icon" />
-                        <input type="email" placeholder="email@domain.com" onChange={e => setEmail(e.target.value)}/>                        
+                        <img src={user_icon} alt="user_icon" />
+                        <input placeholder="Username" onChange={e => setUsername(e.target.value)}/>                        
                     </div>
 
                     {/*Password input*/}

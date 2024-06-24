@@ -1,10 +1,10 @@
 function validation(values) {
     let error = {};
 
-    if (values.email === "") {
-        error.email = "Email should not be empty";
+    if (values.username === "") {
+        error.username = "Email should not be empty";
     } else {
-        error.email = "";
+        error.username = "";
     }
 
     if (values.password === "") {
