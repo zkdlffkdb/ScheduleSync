@@ -11,7 +11,7 @@ app.use(cors());
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "", // fill in with your password
+    password: "Tigger#123", // fill in with your password
     database: "signup"
 })
 
@@ -53,6 +53,7 @@ app.post("/login", (req, res) => {
 app.post("/create-event", (req, res) => {
     // include one more col to tie events to certain loginId
     const getLoginId = "SELECT loginid FROM login WHERE username = ?";
+
     db.query(getLoginId, [req.body.username], (err, result) => {
         if (err) {
             console.error('Unable to find user', err); // should not happen
@@ -100,6 +101,21 @@ app.get("/events", (req, res) => {
         }
     });
 });
+
+app.post("/create-team"), (req, res) => {
+    // have not yet created database for this portion
+};
+
+app.get("/collaborationevents"), (req, res) => {
+    const getEvents = "SELECT * FROM events";
+    db.query(getEvents, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            return res.json(result);
+        }
+    });
+}
 
 const PORT = 8081;
 app.listen(PORT, () => {
