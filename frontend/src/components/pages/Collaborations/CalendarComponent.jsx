@@ -18,7 +18,6 @@ export const CalendarComponent = ({events}) => {
         events={formattedEvents}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 500, margin: '50px' }}
       />
     </div>
   );

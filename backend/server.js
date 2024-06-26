@@ -11,7 +11,7 @@ app.use(cors());
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "", // fill in with your password
+    password: "Pandabearkai12", // fill in with your password
     database: "signup"
 })
 
@@ -116,6 +116,10 @@ app.get("/collaborationevents"), (req, res) => {
         }
     });
 }
+
+app.get("/usernames"), (req, res) => {
+    // TODO: fetch usernames from database
+};
 
 const PORT = 8081;
 app.listen(PORT, () => {

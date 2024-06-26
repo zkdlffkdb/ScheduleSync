@@ -30,28 +30,26 @@ export const MySchedule = ({ userName }) => {
     e.preventDefault();
     const startLocal = new Date(newEvent.start);
     const endLocal = new Date(newEvent.end);
-    
-    const startYear = startLocal.getFullYear();
-    const startMonth = ('0' + (startLocal.getMonth() + 1)).slice(-2); // Month is zero-based
-    const startDay = ('0' + startLocal.getDate()).slice(-2);
-    const startHours = ('0' + startLocal.getHours()).slice(-2);
-    const startMinutes = ('0' + startLocal.getMinutes()).slice(-2);
-    const startSeconds = ('0' + startLocal.getSeconds()).slice(-2);
-    const sqlStartDateTime = `${startYear}-${startMonth}-${startDay} ${startHours}:${startMinutes}:${startSeconds}`;
 
-    const endYear = endLocal.getFullYear();
-    const endMonth = ('0' + (endLocal.getMonth() + 1)).slice(-2);
-    const endDay = ('0' + endLocal.getDate()).slice(-2);
-    const endHours = ('0' + endLocal.getHours()).slice(-2);
-    const endMinutes = ('0' + endLocal.getMinutes()).slice(-2);
-    const endSeconds = ('0' + endLocal.getSeconds()).slice(-2);
-    const sqlEndDateTime = `${endYear}-${endMonth}-${endDay} ${endHours}:${endMinutes}:${endSeconds}`;
+    const formatDateTime = (date) => {
+      const year = date.getFullYear();
+      const month = ('0' + (date.getMonth() + 1)).slice(-2); // Month is zero-based
+      const day = ('0' + date.getDate()).slice(-2);
+      const hours = ('0' + date.getHours()).slice(-2);
+      const minutes = ('0' + date.getMinutes()).slice(-2);
+      const seconds = ('0' + date.getSeconds()).slice(-2);
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    };
 
+    const sqlStartDateTime = formatDateTime(startLocal);
+    const sqlEndDateTime = formatDateTime(endLocal);
+  
     const eventToAdd = {
       ...newEvent,
       start: sqlStartDateTime,
       end: sqlEndDateTime,
     };
+
     axios.post("http://localhost:8081/create-event", eventToAdd)
       .then((response) => setEvents([...events, eventToAdd]))
       .catch((error) => console.log("Error creating event", error));
@@ -60,7 +58,7 @@ export const MySchedule = ({ userName }) => {
 
   return (
     <div className="container">
-      <div className="add-event">
+      <div className="sidebar">
         <form onSubmit={handleAddEvent}>
           <p>Event Title</p>
           <input
@@ -87,7 +85,7 @@ export const MySchedule = ({ userName }) => {
             onChange={handleInputChange}
             required
           />
-          <button type="submit">Add Event</button>
+          <button className="add-team-btn" type="submit">Add Event</button>
         </form>
       </div>
       <div className="calendar">
