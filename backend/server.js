@@ -11,7 +11,7 @@ app.use(cors());
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "Pandabearkai12", // fill in with your password
+    password: "", // fill in with your password
     database: "signup"
 })
 
@@ -23,7 +23,6 @@ app.post("/sign-up", (req, res) => {
         req.body.password
     ];
     db.query(sql, [values], (err, result) => {
-        // probably can include an extra error if there is duplicate username
         if (err) {
             if (err.code == 'ER_DUP_ENTRY') {
                 return res.json({Error: "Duplicate User"});
@@ -51,7 +50,6 @@ app.post("/login", (req, res) => {
 
 // Endpoint to create an event
 app.post("/create-event", (req, res) => {
-    // include one more col to tie events to certain loginId
     const getLoginId = "SELECT loginid FROM login WHERE username = ?";
 
     db.query(getLoginId, [req.body.username], (err, result) => {
@@ -81,7 +79,6 @@ app.post("/create-event", (req, res) => {
 
 // Endpoint to fetch events
 app.get("/events", (req, res) => {
-    // amend to change it to only relevant events, not all
     const getLoginId = "SELECT loginid FROM login WHERE username = ?";
     db.query(getLoginId, [req.query.username], (err, result) => {
         if (err) {
@@ -102,11 +99,85 @@ app.get("/events", (req, res) => {
     });
 });
 
-app.post("/create-team"), (req, res) => {
-    // have not yet created database for this portion
-};
+app.post("/create-team", (req, res) => {
+    // first register the team, must first check if added user exists 
+    const getLoginId = "SELECT loginid FROM login WHERE username = ?";
+    db.query(getLoginId, [req.body.collaborator], (err, result) => {
+        if (err) {
+            console.error('Error retrieveing username', err);
+            return res.status(500).json("Error retrieveing username");
+        } else if (result.length == 0) {
+            console.error("User does not exist");
+            res.json({Status: "No existing user"});
+        } else {
+            const collaboratorUserId = result[0].loginid; // this is for later
+            // we create the team
+            const makeTeam = "INSERT INTO Team (`teamName`, `startDate`, `endDate`) VALUES (?)";
+            const values = [
+                req.body.name,
+                req.body.startDate,
+                req.body.endDate
+            ];
+            db.query(makeTeam, [values], (err, result) => {
+                if (err) {
+                    console.error('Error creating team:', err);
+                    return res.status(500).json("Error creating team");
+                } else {
+                    //get teamId for the form
+                    const gettingTeamId = "SELECT teamId FROM Team WHERE teamName = ?";
+                    db.query(gettingTeamId, [req.body.name], (err, result) => {
+                        if (err) {
+                            console.error('Error getting teamId', err);
+                            return res.status(500).json("Error getting teamId");
+                        } else {
+                            const teamId = result[0].teamId;
+                            // creating the entry in form for the collaborator
+                            const collabForm = "INSERT INTO Form (`loginId`, `teamId`) VALUES (?)";
+                            const values = [
+                                collaboratorUserId,
+                                teamId
+                            ];
+                            db.query(collabForm, [values], (err, result) => {
+                                if (err) {
+                                    console.error("Error filling form (collaborator)", err);
+                                    return res.status(500).json("Error filling form (collaborator)");
+                                } else {
+                                    // must create entry for user himself
+                                    const getUsersLoginId = "SELECT loginid FROM login WHERE username = ?";
+                                    db.query(getUsersLoginId, [req.body.username], (err, result) => {
+                                        if (err) {
+                                            console.error("Cannot get user's loginId", err);
+                                            return res.status(500).json("Cannot get user's loginId");
+                                        } else {
+                                            const usersLoginId = result[0].loginid;
+                                            const usersForm = "INSERT INTO Form (`loginId`, `teamId`) VALUES (?)";
+                                            const values = [
+                                                usersLoginId,
+                                                teamId
+                                            ];
+                                            db.query(usersForm, [values], (err, result) => {
+                                                if (err) {
+                                                    console.error("Error filling form (user)", err);
+                                                    return res.status(500).json("Error filling form (user)");
+                                                } else {
+                                                    return res.json(result);
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    });
+});
 
 app.get("/collaborationevents"), (req, res) => {
+    // can be used to fetch events in the team later on 
+    /*
     const getEvents = "SELECT * FROM events";
     db.query(getEvents, (err, result) => {
         if (err) {
@@ -115,6 +186,7 @@ app.get("/collaborationevents"), (req, res) => {
             return res.json(result);
         }
     });
+    */
 }
 
 app.get("/usernames"), (req, res) => {

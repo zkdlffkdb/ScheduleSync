@@ -32,7 +32,7 @@ function App() {
 
         {/* Protect routes that require authentication */}
         <Route path="/my-schedule" element={isAuthenticated ? <MySchedule userName={userName} /> : <Error />} />
-        <Route path="/my-collaborations" element={isAuthenticated ? <Collaborations /> : <Error />} />
+        <Route path="/my-collaborations" element={isAuthenticated ? <Collaborations userName={userName} /> : <Error />} />
         <Route path="/my-account" element={isAuthenticated ? <MyAccount onLogout={handleLogout} userName={userName} /> : <Error />} />
       </Routes>
     </div>

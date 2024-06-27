@@ -5,14 +5,14 @@ import './Collaborations.css';
 
 import collab_icon from '../../Assets/collab_icon.png';
 
-export const Collaborations = () => {
+export const Collaborations = ({ userName }) => {
   const [openPopup, setOpenPopup] = useState(false);
   const [teams, setTeams] = useState([]); // Storing list of teams
   const [teamName, setTeamName] = useState(""); // storing new team name
   const [collaborator, setCollaborator] = useState(""); // storing collaborator
   const [startDate, setStartDate] = useState(""); // storing start date
   const [endDate, setEndDate] = useState(""); // storing end date
-  const [usernames, setUsernames] = useState([]);
+  // const [usernames, setUsernames] = useState([]);
 
   useEffect(() => {
     // Fetch the list of teams from the database when the component mounts
@@ -23,21 +23,22 @@ export const Collaborations = () => {
       .catch((error) => {
         console.error("There was an error fetching the teams!", error);
       });
-
-    // Fetch the list of usernames from the database for the collaborator dropdown
-    axios.get("http://localhost:8081/usernames")
-      .then((response) => {
-        setUsernames(response.data); // Set the fetched usernames in state
-      })
-      .catch((error) => {
-        console.error("There was an error fetching usernames!", error);
-      });
-  }, []); // Empty dependency array means this effect runs only once after initial render
+  });
 
   const handleAddTeam = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:8081/create-team", {name: teamName, collaborator })
+    axios.post("http://localhost:8081/create-team", {
+      name: teamName,
+      collaborator: collaborator,
+      startDate: startDate,
+      endDate: endDate,
+      username: userName
+    })
       .then((response) => {
+        if (response.data.Status === "No existing user") {
+          // temporary configuration, can be represented differently later
+          alert("No existing user");
+        }
         setTeams([...teams, response.data]); // add new team to list
         setTeamName(""); // Clearing input fields
         setCollaborator(""); 
@@ -83,16 +84,13 @@ export const Collaborations = () => {
                 <p>Add collaborators</p>
                 <div className="collaborator-input">
                   <img src={collab_icon} alt="collab_icon" width="30" height="30"/>
-                  <select 
-                    value={collaborator}
-                    onChange={(e) => setCollaborator(e.target.value)}
-                    required 
-                  >
-                    <option value="">Username</option>
-                    {usernames.map((username, index) => (
-                      <option key={index} value={username}>{username}</option>
-                    ))}
-                  </select>
+                  <input
+                  type="text"
+                  placeholder="Username"
+                  value={collaborator}
+                  onChange={(e) => setCollaborator(e.target.value)}
+                  required
+                />
                 </div>
               </div>
 
