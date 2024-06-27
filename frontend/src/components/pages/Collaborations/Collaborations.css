@@ -19,6 +19,28 @@
     justify-content: space-between;
     padding: 10px 20px;
   }
+
+  /* team button formatting */
+  .team-button {
+    width: 300px;
+    
+  }
+
+  .team-button.color-0 {
+    background-color: #FF5733;
+  }
+
+  .team-button.color-1 {
+    background-color: #2fbe49;
+  }
+
+  .team-button.color-2 {
+    background-color: #3357FF;
+  }
+
+  .team-button.color-3 {
+    background-color: #FF33A6;
+  }
   
   .calendar {
     margin-left: 320px; /* Adjusted according to the sidebar width */

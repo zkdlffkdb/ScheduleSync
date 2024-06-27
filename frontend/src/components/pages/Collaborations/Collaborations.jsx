@@ -16,7 +16,7 @@ export const Collaborations = ({ userName }) => {
 
   useEffect(() => {
     // Fetch the list of teams from the database when the component mounts
-    axios.get("http://localhost:8081/collaborationevents")
+    axios.get("http://localhost:8081/collaboration-events")
       .then((response) => {
         setTeams(response.data); // Set the fetched teams in state
       })
@@ -61,7 +61,7 @@ export const Collaborations = ({ userName }) => {
         {/*This text disappears when pop-up is opened for now, aim to make it be removed when team is created*/}
         {!openPopup && <p>Create a team to get started!</p>} 
         {teams.map((team, index) => (
-          <button key={index} className="team-button">{team.name}</button>
+          <button key={index} className={`team-button color-${index % 4}`}>{team.name}</button>
         ))}
       </div>
       <div className="calendar">
