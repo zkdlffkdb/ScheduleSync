@@ -65,6 +65,13 @@
   .pop-up img {
     margin-right: 10px; /* Add space between the image and input */
   }
+
+  .pop-up input {
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
   
   .collaborators {
     display: flex;

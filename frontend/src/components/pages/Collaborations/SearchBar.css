@@ -4,14 +4,7 @@
     max-width: 300px;
     margin: 0 auto;
 }
-  
-input {
-    padding: 5px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-  
+
 .dropdown {
     position: absolute;
     top: 100%;
@@ -27,7 +20,7 @@ input {
     list-style-type: none;
     z-index: 1000;
 }
-  
+
 .selector {
     padding: 10px;
     cursor: pointer;
