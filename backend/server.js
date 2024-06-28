@@ -106,19 +106,17 @@ app.post("/create-team"), (req, res) => {
     // have not yet created database for this portion
 };
 
-app.get("/fetch-usernames", (req, res) => {
-    const { search, currentUsername } = req.query.value;
-    const sql = "SELECT username FROM login WHERE username LIKE ? AND username != ?";
-    const formattedSearch = `%${search}%`;
-
-    db.query(sql, [formattedSearch, currentUsername], (err, result) => {
+// can be used to fetch events in the team later on 
+    /*
+    const getEvents = "SELECT * FROM events";
+    db.query(getEvents, (err, result) => {
         if (err) {
             console.log(err);
         } else {
             return res.json(result);
         }
     });
-});
+    */
 
 app.post("/create-team", (req, res) => {
     // first register the team, must first check if added user exists 
