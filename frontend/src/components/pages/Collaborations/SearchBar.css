@@ -1,0 +1,39 @@
+.wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+}
+  
+input {
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+  
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-top: none;
+    max-height: 150px;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    z-index: 1000;
+}
+  
+.selector {
+    padding: 10px;
+    cursor: pointer;
+    color: black;
+}
+  
+.selector:hover {
+    background-color: #f0f0f0;
+}
