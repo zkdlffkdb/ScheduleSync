@@ -11,7 +11,7 @@ app.use(cors());
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "Tigger#123", // fill in with your password
+    password: "", // fill in with your password
     database: "signup"
 })
 
@@ -107,6 +107,48 @@ app.get("/events", (req, res) => {
     });
 });
 
+// Endpoint to fetch teams
+app.get("/fetch-teams", (req, res) => {
+    const getLoginId = "SELECT loginId FROM login WHERE username = ?";
+    db.query(getLoginId, [req.query.username], (err, result) => {
+        if (err) {
+            console.error('Unable to find user', err);
+            return res.status(500).json("Unable to find user");
+        } else {
+            if (result.length === 0) {
+                return res.status(404).json("User not found");
+            }
+            const userId = result[0].loginId;
+            const sql = `
+                SELECT team.teamId, team.teamName, team.startDate, team.endDate 
+                FROM form
+                JOIN team ON form.teamId = team.teamId
+                WHERE form.loginId = ?
+                GROUP BY team.teamId, team.teamName`;
+            db.query(sql, [userId], (err, teams) => {
+                if (err) {
+                    console.error('Error retrieving teams:', err);
+                    return res.status(500).json("Error retrieving teams");
+                } else {
+                    return res.json(teams);
+                }
+            });
+        }
+    });
+});
+
+// can be used to fetch events in the team later on 
+    /*
+    const getEvents = "SELECT * FROM events";
+    db.query(getEvents, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            return res.json(result);
+        }
+    });
+    */
+
 app.post("/create-team", (req, res) => {
     // first register the team, must first check if added user exists 
     const getLoginId = "SELECT loginId FROM login WHERE username = ?";
@@ -190,23 +232,24 @@ app.post("/create-team", (req, res) => {
     });
 });
 
-app.get("/collaboration-events"), (req, res) => {
-    // can be used to fetch events in the team later on 
-    /*
-    const getEvents = "SELECT * FROM events";
-    db.query(getEvents, (err, result) => {
+// Endpoint to fetch events for all team members in collab page
+app.get("/fetch-team-events", (req, res) => {
+    const teamId = req.query.teamId;
+    const sql = `
+        SELECT events.*
+        FROM form
+        JOIN events ON form.loginId = events.loginId
+        WHERE form.teamId = ?`;
+    
+    db.query(sql, [teamId], (err, result) => {
         if (err) {
-            console.log(err);
+            console.error('Error retrieving events:', err);
+            return res.status(500).json("Error retrieving events");
         } else {
             return res.json(result);
         }
     });
-    */
-}
-
-app.get("/get-login-id"), (req, res) => {
-    // TODO: fetch login id from database
-};
+});
 
 const PORT = 8081;
 app.listen(PORT, () => {
