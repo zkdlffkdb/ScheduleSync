@@ -57,22 +57,30 @@ app.post("/create-event", (req, res) => {
             console.error('Unable to find user', err); // should not happen
             return res.status(500).json("Unable to find user");
         } else {
-            const userId = result[0].loginId;
-            const sql = "INSERT INTO events (`title`, `start`, `end`, `loginId`) VALUES (?)";
-            const values = [
-                req.body.title,
-                req.body.start,
-                req.body.end,
-                userId
-            ];
-            db.query(sql, [values], (err, result) => {
-                if (err) {
-                    console.error('Error creating event:', err);
-                    return res.status(500).json("Error creating event");
-                } else {
-                    return res.json(result);
-                }
-            });
+            if (req.body.start > req.body.end) {
+                // handling case where same day, end time earlier than start time
+                // also different day, ending earlier than start
+                // last one, where both before current datetime
+                // comparison is done using strings, must have further testing in case i missed an edge case
+                return res.json({Status: "Invalid time"});
+            } else {
+                const userId = result[0].loginId;
+                const sql = "INSERT INTO events (`title`, `start`, `end`, `loginId`) VALUES (?)";
+                const values = [
+                    req.body.title,
+                    req.body.start,
+                    req.body.end,
+                    userId
+                ];
+                db.query(sql, [values], (err, result) => {
+                    if (err) {
+                        console.error('Error creating event:', err);
+                        return res.status(500).json("Error creating event");
+                    } else {
+                        return res.json(result);
+                    }
+                });
+            }
         }
     });
 });

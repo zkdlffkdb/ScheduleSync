@@ -51,7 +51,12 @@ export const MySchedule = ({ userName }) => {
     };
 
     axios.post("http://localhost:8081/create-event", eventToAdd)
-      .then((response) => setEvents([...events, eventToAdd]))
+      .then((response) => {
+        if (response.data.Status === "Invalid time") {
+          alert("Invalid datetime");
+        }
+        setEvents([...events, eventToAdd])
+      })
       .catch((error) => console.log("Error creating event", error));
     setNewEvent({ title: '', start: '', end: '', username: userName});
   };
