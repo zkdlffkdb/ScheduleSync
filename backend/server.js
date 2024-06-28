@@ -137,20 +137,17 @@ app.get("/fetch-teams", (req, res) => {
     });
 });
 
-app.get("/fetch-usernames", (req, res) => {
-    const { search, currentUsername } = req.query.value;
-    const sql = "SELECT username FROM login WHERE username LIKE ? AND username != ?";
-    const formattedSearch = `%${search}%`;
-
-    db.query(sql, [formattedSearch, currentUsername], (err, result) => {
+// can be used to fetch events in the team later on 
+    /*
+    const getEvents = "SELECT * FROM events";
+    db.query(getEvents, (err, result) => {
         if (err) {
-            console.error('Error retrieving usernames:', err);
-            return res.status(500).json("Error retrieving usernames");
+            console.log(err);
         } else {
             return res.json(result);
         }
     });
-});
+    */
 
 app.post("/create-team", (req, res) => {
     // first register the team, must first check if added user exists 

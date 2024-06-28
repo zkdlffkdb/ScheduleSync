@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { CalendarComponent } from './CalendarComponent'
-import { SearchBar } from './SearchBar';
 import axios from 'axios';
 import './Collaborations.css';
 
@@ -80,8 +79,8 @@ export const Collaborations = ({ userName }) => {
           <p>My Teams</p>
           <button className="corner-button-open" onClick={() => setOpenPopup(true)}>+</button>
         </div>
-        {/*This text disappears when pop-up is opened or if the user is part of 1 or more teams*/}
-        {!openPopup && teams.length === 0 && <p>Create a team to get started!</p>} 
+        {/*This text disappears when pop-up is opened for now, aim to make it be removed when team is created*/}
+        {!openPopup && <p>Create a team to get started!</p>} 
         {teams.map((team, index) => (
           <button 
             key={team.teamId} 
@@ -114,7 +113,13 @@ export const Collaborations = ({ userName }) => {
                 <p>Add collaborators</p>
                 <div className="collaborator-input">
                   <img src={collab_icon} alt="collab_icon" width="30" height="30"/>
-                  <SearchBar onSelect={(username) => setCollaborator(username)} currentUsername = {userName} />
+                  <input
+                  type="text"
+                  placeholder="Username"
+                  value={collaborator}
+                  onChange={(e) => setCollaborator(e.target.value)}
+                  required
+                />
                 </div>
               </div>
 
