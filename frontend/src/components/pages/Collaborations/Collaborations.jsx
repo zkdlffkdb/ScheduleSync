@@ -81,7 +81,7 @@ export const Collaborations = ({ userName }) => {
           <button className="corner-button-open" onClick={() => setOpenPopup(true)}>+</button>
         </div>
         {/*This text disappears when pop-up is opened for now, aim to make it be removed when team is created*/}
-        {!openPopup && <p>Create a team to get started!</p>} 
+        {!openPopup && teams.length === 0 && <p>Create a team to get started!</p>} 
         {teams.map((team, index) => (
           <button 
             key={team.teamId} 
@@ -115,15 +115,6 @@ export const Collaborations = ({ userName }) => {
                 <div className="collaborator-input">
                   <img src={collab_icon} alt="collab_icon" width="30" height="30"/>
                   <SearchBar onSelect={(username) => setCollaborator(username)} currentUsername={userName} />
-                  {/*
-                  <input
-                  type="text"
-                  placeholder="Username"
-                  value={collaborator}
-                  onChange={(e) => setCollaborator(e.target.value)}
-                  required
-                  
-                />*/}
                 </div>
               </div>
 
