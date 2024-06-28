@@ -31,4 +31,8 @@
     cursor: pointer;
 }
 
-/*still need to style .calendar dk why it has extra space between calendar and sidebar*/
+/*got rid of extra space between calendar and sidebar*/
+.myScheduleCalendar {
+    display: flex;
+    transform: translate(35%, 10%);
+}

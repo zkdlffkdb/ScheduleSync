@@ -93,7 +93,7 @@ export const MySchedule = ({ userName }) => {
           <button className="add-team-btn" type="submit">Add Event</button>
         </form>
       </div>
-      <div className="calendar">
+      <div className="myScheduleCalendar">
         <CalendarComponent events={events} />
       </div>
     </div>
