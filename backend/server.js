@@ -11,7 +11,7 @@ app.use(cors());
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "", // fill in with your password
+    password: "Pandabearkai12", // fill in with your password
     database: "signup"
 })
 
@@ -44,6 +44,19 @@ app.post("/login", (req, res) => {
             return res.json(result[0].username);
         } else {
             return res.json("Failed");
+        }
+    })
+})
+
+// Endpoint to fetch usernames for search bar in collaborations
+app.get("/fetch-usernames", (req, res) => {
+    const { value, currentUsername } = req.query;
+    const sql = "SELECT `username` FROM login WHERE `username` LIKE ? AND `username` != ?";
+    db.query(sql, [`%${value}%`, currentUsername], (err, result) => {
+        if (err) {
+            return res.json('Error fetching usernames');
+        } else {
+            return res.json(result);
         }
     })
 })

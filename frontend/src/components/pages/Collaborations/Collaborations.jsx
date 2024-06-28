@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { CalendarComponent } from './CalendarComponent'
+import { SearchBar } from './SearchBar';
 import axios from 'axios';
 import './Collaborations.css';
 
@@ -113,13 +114,16 @@ export const Collaborations = ({ userName }) => {
                 <p>Add collaborators</p>
                 <div className="collaborator-input">
                   <img src={collab_icon} alt="collab_icon" width="30" height="30"/>
+                  <SearchBar onSelect={(username) => setCollaborator(username)} currentUsername={userName} />
+                  {/*
                   <input
                   type="text"
                   placeholder="Username"
                   value={collaborator}
                   onChange={(e) => setCollaborator(e.target.value)}
                   required
-                />
+                  
+                />*/}
                 </div>
               </div>
 

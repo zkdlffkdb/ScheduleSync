@@ -1,135 +1,142 @@
 .container {
-    display: flex;
-  }
-  
-  .sidebar {
-    height: 100%;
-    width: 300px;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    background-color: black;
-    color: white;
-    overflow-x: hidden;
-    padding: 20px;
-  }
-  
-  .create-team {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 20px;
-  }
+  display: flex;
+}
 
-  /* team button formatting */
-  .team-button {
-    width: 300px;
-    
-  }
+.sidebar {
+  height: 100%;
+  width: 300px;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  background-color: black;
+  color: white;
+  overflow-x: hidden;
+  padding: 20px;
+}
 
-  .team-button.color-0 {
-    background-color: #FF5733;
-  }
+.create-team {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
 
-  .team-button.color-1 {
-    background-color: #2fbe49;
-  }
+/* team button formatting */
+.team-button {
+  width: 300px;
+  
+}
 
-  .team-button.color-2 {
-    background-color: #3357FF;
-  }
+.team-button.color-0 {
+  background-color: #FF5733;
+}
 
-  .team-button.color-3 {
-    background-color: #FF33A6;
-  }
-  
-  .calendar {
-    margin-left: 320px; /* Adjusted according to the sidebar width */
-    padding: 20px;
-  }
-  
-  .pop-up {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Align items to the left */
-    background-color: black;
-    color: white;
-    padding: 30px 20px;
-    border-radius: 10px;
-    position: fixed;
-    top: 20%;
-    left: 50%;
-    transform: translate(-50%, -20%);
-    z-index: 2;
-  }
-  
-  .pop-up img {
-    margin-right: 10px; /* Add space between the image and input */
-  }
-  
-  .collaborators {
-    display: flex;
-    flex-direction: column; /* Align text and input vertically */
-    align-items: flex-start; /* Align items to the left */
-    width: 100%; /* Ensure full width */
-    margin: 10px 0;
-  }
+.team-button.color-1 {
+  background-color: #2fbe49;
+}
 
-  .collaborators p {
-    font-size: 14px;
-    margin: 0;
-  }
+.team-button.color-2 {
+  background-color: #3357FF;
+}
 
-  .collaborator-input {
-    display: flex;
-    align-items: center; /* Center items vertically */
-    margin-top: 5px; /* Add space between the label and input */
-  }
-  
-  .timeframe {
-    display: flex;
-    align-items: center; /* Align items vertically */
-    margin: 10px 0;
-  }
+.team-button.color-3 {
+  background-color: #FF33A6;
+}
 
-  .timeframe div {
-    display: flex;
-    flex-direction: row; /* Ensure items are in a row */
-    align-items: center; /* Align items vertically */
-    margin-left: 10px;
-  }
+.calendar {
+  margin-left: 320px; /* Adjusted according to the sidebar width */
+  padding: 20px;
+}
 
-  .timeframe label {
-    margin-right: 10px; /* Add space between label and input */
-    margin-bottom: 0; /* Remove bottom margin */
-  }
-  
-  .create-team-btn {
-    background-color: white;
-    color: black;
-    width: 150px;
-    height: 50px;
-    border-radius: 10px;
-    margin-top: 20px;
-    align-self: center; /* Center the button horizontally */
-  }
-  
-  .corner-button-open {
-    background: none;
-    width: 30px;
-    height: 30px;
-    border: none;
-    color: white;
-    cursor: pointer;
-  }
-  
-  .corner-button-close {
-    background: none;
-    width: 30px;
-    height: 30px;
-    border: none;
-    color: white;
-    cursor: pointer;
-    position: absolute;
-    top: 10px;
-    right: 10px; /* Align close button to the right */
-  }
+.pop-up {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the left */
+  background-color: black;
+  color: white;
+  padding: 30px 20px;
+  border-radius: 10px;
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -20%);
+  z-index: 2;
+}
+
+.pop-up img {
+  margin-right: 10px; /* Add space between the image and input */
+}
+
+.pop-up input {
+  padding: 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.collaborators {
+  display: flex;
+  flex-direction: column; /* Align text and input vertically */
+  align-items: flex-start; /* Align items to the left */
+  width: 100%; /* Ensure full width */
+  margin: 10px 0;
+}
+
+.collaborators p {
+  font-size: 14px;
+  margin: 0;
+}
+
+.collaborator-input {
+  display: flex;
+  align-items: center; /* Center items vertically */
+  margin-top: 5px; /* Add space between the label and input */
+}
+
+.timeframe {
+  display: flex;
+  align-items: center; /* Align items vertically */
+  margin: 10px 0;
+}
+
+.timeframe div {
+  display: flex;
+  flex-direction: row; /* Ensure items are in a row */
+  align-items: center; /* Align items vertically */
+  margin-left: 10px;
+}
+
+.timeframe label {
+  margin-right: 10px; /* Add space between label and input */
+  margin-bottom: 0; /* Remove bottom margin */
+}
+
+.create-team-btn {
+  background-color: white;
+  color: black;
+  width: 150px;
+  height: 50px;
+  border-radius: 10px;
+  margin-top: 20px;
+  align-self: center; /* Center the button horizontally */
+}
+
+.corner-button-open {
+  background: none;
+  width: 30px;
+  height: 30px;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.corner-button-close {
+  background: none;
+  width: 30px;
+  height: 30px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px; /* Align close button to the right */
+}
