@@ -11,7 +11,7 @@ app.use(cors());
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "", // fill in with your password
+    password: "Tigger#123", // fill in with your password
     database: "signup"
 })
 
@@ -118,70 +118,74 @@ app.post("/create-team", (req, res) => {
             console.error("User does not exist");
             res.json({Status: "No existing user"});
         } else {
-            const collaboratorUserId = result[0].loginId; // this is for later
-            // we create the team
-            const makeTeam = "INSERT INTO team (`teamName`, `startDate`, `endDate`) VALUES (?)";
-            const values = [
-                req.body.name,
-                req.body.startDate,
-                req.body.endDate
-            ];
-            db.query(makeTeam, [values], (err, result) => {
-                if (err) {
-                    if (err.code == 'ER_DUP_ENTRY') {
-                        console.error("Duplicate team name");
-                        return res.json({Status: "Duplicate team name"});
-                    }
-                    console.log(err);
-                } else {
-                    //get teamId for the form
-                    const gettingTeamId = "SELECT teamId FROM team WHERE teamName = ?";
-                    db.query(gettingTeamId, [req.body.name], (err, result) => {
-                        if (err) {
-                            console.error('Error getting teamId', err);
-                            return res.status(500).json("Error getting teamId");
-                        } else {
-                            const teamId = result[0].teamId;
-                            // creating the entry in form for the collaborator
-                            const collabForm = "INSERT INTO form (`loginId`, `teamId`) VALUES (?)";
-                            const values = [
-                                collaboratorUserId,
-                                teamId
-                            ];
-                            db.query(collabForm, [values], (err, result) => {
-                                if (err) {
-                                    console.error("Error filling form (collaborator)", err);
-                                    return res.status(500).json("Error filling form (collaborator)");
-                                } else {
-                                    // must create entry for user himself
-                                    const getUsersLoginId = "SELECT loginId FROM login WHERE username = ?";
-                                    db.query(getUsersLoginId, [req.body.username], (err, result) => {
-                                        if (err) {
-                                            console.error("Cannot get user's loginId", err);
-                                            return res.status(500).json("Cannot get user's loginId");
-                                        } else {
-                                            const usersLoginId = result[0].loginId;
-                                            const usersForm = "INSERT INTO form (`loginId`, `teamId`) VALUES (?)";
-                                            const values = [
-                                                usersLoginId,
-                                                teamId
-                                            ];
-                                            db.query(usersForm, [values], (err, result) => {
-                                                if (err) {
-                                                    console.error("Error filling form (user)", err);
-                                                    return res.status(500).json("Error filling form (user)");
-                                                } else {
-                                                    return res.json(result);
-                                                }
-                                            });
-                                        }
-                                    });
-                                }
-                            });
+            if (req.body.startDate > req.body.endDate) {
+                return res.json({Status: "Invalid datetime"});
+            } else {
+                const collaboratorUserId = result[0].loginId; // this is for later
+                // we create the team
+                const makeTeam = "INSERT INTO team (`teamName`, `startDate`, `endDate`) VALUES (?)";
+                const values = [
+                    req.body.name,
+                    req.body.startDate,
+                    req.body.endDate
+                ];
+                db.query(makeTeam, [values], (err, result) => {
+                    if (err) {
+                        if (err.code == 'ER_DUP_ENTRY') {
+                            console.error("Duplicate team name");
+                            return res.json({Status: "Duplicate team name"});
                         }
-                    });
-                }
-            });
+                        console.log(err);
+                    } else {
+                        //get teamId for the form
+                        const gettingTeamId = "SELECT teamId FROM team WHERE teamName = ?";
+                        db.query(gettingTeamId, [req.body.name], (err, result) => {
+                            if (err) {
+                                console.error('Error getting teamId', err);
+                                return res.status(500).json("Error getting teamId");
+                            } else {
+                                const teamId = result[0].teamId;
+                                // creating the entry in form for the collaborator
+                                const collabForm = "INSERT INTO form (`loginId`, `teamId`) VALUES (?)";
+                                const values = [
+                                    collaboratorUserId,
+                                    teamId
+                                ];
+                                db.query(collabForm, [values], (err, result) => {
+                                    if (err) {
+                                        console.error("Error filling form (collaborator)", err);
+                                        return res.status(500).json("Error filling form (collaborator)");
+                                    } else {
+                                        // must create entry for user himself
+                                        const getUsersLoginId = "SELECT loginId FROM login WHERE username = ?";
+                                        db.query(getUsersLoginId, [req.body.username], (err, result) => {
+                                            if (err) {
+                                                console.error("Cannot get user's loginId", err);
+                                                return res.status(500).json("Cannot get user's loginId");
+                                            } else {
+                                                const usersLoginId = result[0].loginId;
+                                                const usersForm = "INSERT INTO form (`loginId`, `teamId`) VALUES (?)";
+                                                const values = [
+                                                    usersLoginId,
+                                                    teamId
+                                                ];
+                                                db.query(usersForm, [values], (err, result) => {
+                                                    if (err) {
+                                                        console.error("Error filling form (user)", err);
+                                                        return res.status(500).json("Error filling form (user)");
+                                                    } else {
+                                                        return res.json(result);
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }
         }
     });
 });
