@@ -38,6 +38,8 @@ export const Collaborations = ({ userName }) => {
         if (response.data.Status === "No existing user") {
           // temporary configuration, can be represented differently later
           alert("No existing user");
+        } else if (response.data.Status === "Duplicate team name") {
+          alert("This team name already exists, please choose another one");
         }
         setTeams([...teams, response.data]); // add new team to list
         setTeamName(""); // Clearing input fields

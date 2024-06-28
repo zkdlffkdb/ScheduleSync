@@ -11,7 +11,7 @@ app.use(cors());
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "Pandabearkai12", // fill in with your password
+    password: "", // fill in with your password
     database: "signup"
 })
 
@@ -120,8 +120,11 @@ app.post("/create-team", (req, res) => {
             ];
             db.query(makeTeam, [values], (err, result) => {
                 if (err) {
-                    console.error('Error creating team:', err);
-                    return res.status(500).json("Error creating team");
+                    if (err.code == 'ER_DUP_ENTRY') {
+                        console.error("Duplicate team name");
+                        return res.json({Status: "Duplicate team name"});
+                    }
+                    console.log(err);
                 } else {
                     //get teamId for the form
                     const gettingTeamId = "SELECT teamId FROM team WHERE teamName = ?";
