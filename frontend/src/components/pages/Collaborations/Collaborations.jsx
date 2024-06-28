@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-// import { CalendarComponent } from './CalendarComponent'
+import { CalendarComponent } from './CalendarComponent'
+import { SearchBar } from './SearchBar';
 import axios from 'axios';
 import './Collaborations.css';
 
@@ -83,16 +84,7 @@ export const Collaborations = () => {
                 <p>Add collaborators</p>
                 <div className="collaborator-input">
                   <img src={collab_icon} alt="collab_icon" width="30" height="30"/>
-                  <select 
-                    value={collaborator}
-                    onChange={(e) => setCollaborator(e.target.value)}
-                    required 
-                  >
-                    <option value="">Username</option>
-                    {usernames.map((username, index) => (
-                      <option key={index} value={username}>{username}</option>
-                    ))}
-                  </select>
+                  <SearchBar onSelect={(username) => setCollaborator(username)} currentUsername = {userName} />
                 </div>
               </div>
 
