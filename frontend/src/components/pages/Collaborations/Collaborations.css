@@ -1,5 +1,7 @@
 .container {
   display: flex;
+  width: 100%;
+  min-height: 100vh;
 }
 
 .sidebar {
@@ -31,7 +33,7 @@
 }
 
 .team-button.color-1 {
-  background-color: #2fbe49;
+  background-color: #30ae47;
 }
 
 .team-button.color-2 {
@@ -43,8 +45,18 @@
 }
 
 .calendar {
-  margin-left: 320px; /* Adjusted according to the sidebar width */
-  padding: 20px;
+  flex-grow: 1;
+  background-color: white;
+  align-items: center;
+}
+
+.events-calendar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 180px;
+  width: 100%;
+  background-color: white;
 }
 
 .pop-up {

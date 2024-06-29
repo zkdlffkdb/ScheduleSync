@@ -8,8 +8,8 @@ const localizer = momentLocalizer(moment);
 export const CalendarComponent = ({events}) => {
   const formattedEvents = events.map(event => ({
     ...event,
-    start: new Date(event.start),
-    end: new Date(event.end)
+    start: new Date(event.start), 
+    end: new Date(event.end)  
   }));
   return (
     <div>
@@ -18,7 +18,7 @@ export const CalendarComponent = ({events}) => {
         events={formattedEvents}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 500, width: 500 }}
+        style={{ height: 500, width: 600 }}
       />
     </div>
   );

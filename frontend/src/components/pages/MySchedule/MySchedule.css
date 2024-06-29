@@ -19,6 +19,7 @@
 
 .add-team-btn {
     margin: 20px auto;
+    display: flex;
     justify-content: center;
     align-items: center;
     width: 220px;
@@ -34,5 +35,9 @@
 /*got rid of extra space between calendar and sidebar*/
 .myScheduleCalendar {
     display: flex;
-    transform: translate(35%, 10%);
+    flex-direction: column;
+    align-items: center;
+    margin-left: 180px;
+    width: 100%;
+    background-color: white;
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
-import { CalendarComponent } from './CalendarComponent'
+import { CalendarComponent } from '../CalendarComponent'
 import './MySchedule.css'
 
 export const MySchedule = ({ userName }) => {
@@ -94,6 +94,7 @@ export const MySchedule = ({ userName }) => {
         </form>
       </div>
       <div className="myScheduleCalendar">
+        <h2>{userName}'s events</h2>
         <CalendarComponent events={events} />
       </div>
     </div>
