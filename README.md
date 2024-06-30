@@ -19,12 +19,12 @@ ScheduleSync is a WebApp which aims to streamline the scheduling process and hel
 Run the following SQL queries in an IDE of your choice. This will create the necessary tables in our schema.
 
 ### Create schema, ‘signup’: 
-CREATE SCHEMA `signup`;
+`CREATE SCHEMA `signup``;
 
 ### Login: 
 CREATE TABLE `signup`.`login` (
-`loginId` INT NOT NULL AUTO_INCREMENT,
-`username` VARCHAR(20) NOT NULL,
+  `loginId` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(20) NOT NULL,
   `email` VARCHAR(30) NOT NULL,
   `password` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`loginId`),
