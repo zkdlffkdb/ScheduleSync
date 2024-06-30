@@ -17,11 +17,11 @@ ScheduleSync is a WebApp which aims to streamline the scheduling process and hel
 
 ## Creating the Database
 Run the following SQL queries in an IDE of your choice. This will create the necessary tables in our schema.
+```sql
+# Create schema, ‘signup’: 
+CREATE SCHEMA `signup`;
 
-### Create schema, ‘signup’: 
-`CREATE SCHEMA `signup``;
-
-### Login: 
+# Login: 
 CREATE TABLE `signup`.`login` (
   `loginId` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(20) NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE `signup`.`login` (
   UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE);
 
-### Events:
+# Events:
 CREATE TABLE `signup`.`events` (
   `eventsId` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(50) NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE `signup`.`events` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-### Team:
+# Team:
 CREATE TABLE signup.team (
   teamId INT NOT NULL AUTO_INCREMENT,
   teamName VARCHAR(50) NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE signup.team (
   PRIMARY KEY (`teamId`),
   UNIQUE INDEX teamName_UNIQUE (`teamName` ASC) VISIBLE);
 
-### Form:
+# Form:
 CREATE TABLE signup.form (
   loginId INT NOT NULL,
   teamId INT NOT NULL,
